@@ -1,59 +1,53 @@
 package org.foobarspam.cotxox.tarifa;
 
-import org.foobarspam.cotxox.carrera.*;
+import org.foobarspam.cotxox.carrera.Carrera;
 
+/**
+ * Created by vgarcia.regadera on 19/04/2017.
+ */
 public class Tarifa {
-	
-	// variables
 
-	final double costeMilla = 1.35;
-	final double costeMinuto = 0.35;
-	final int costeMinimo = 5;
-	final int porcentajeComision = 20;
-	
-	// constructor
-	
-	public Tarifa() {
-	}
-	
-	// getters
-	
-	public double getCosteMilla() {
-		return costeMilla;
-	}
+    private static double costeMilla = 1.35;
+    private static double costeMinuto = 0.35;
+    private static double costeMinimo = 5.0;
+    private double porcentajeComision = 20;
 
-	public double getCosteMinuto() {
-		return costeMinuto;
-	}
+    // getters
 
-	public int getCosteMinimo() {
-		return costeMinimo;
-	}
-	
-	// logic
-	
-	public double getCosteDistancia(double distancia) {
-		
-		double costePorDistancia = distancia * getCosteMilla();
-		return costePorDistancia;
-		
-	}
-	
-	public double getCosteTiempo (int minutos) {
-		
-		double costePorTiempo = minutos * getCosteMinuto();
-		return costePorTiempo;
-	}
-	
-	public double getTotalEsperado(Carrera carrera) {
-		
-		double totalEsperado = getCosteDistancia(carrera.getDistancia()) + getCosteTiempo(carrera.getTiempoEsperado());
-		
-		if (totalEsperado >= 5) {
-			return totalEsperado;
-		} else {
-			return getCosteMinimo();
-		}			
-	}
-	
+    public static double getCosteMilla() {
+        return costeMilla;
+    }
+
+    public static double getCosteMinuto() {
+        return costeMinuto;
+    }
+
+    public static double getCosteMinimo() {
+        return costeMinimo;
+    }
+
+
+    // logic
+
+    public static double getCosteDistancia(double distancia) {
+        double costeFinalDistancia = getCosteMilla() * distancia;
+        return costeFinalDistancia;
+    }
+
+    public static double getCosteTiempo(double minutos) {
+        double costeFinalTiempo = getCosteMinuto() * minutos;
+        return costeFinalTiempo;
+    }
+
+    public static double getCosteTotalEsperado(double tiempo, double distancia) {
+
+        double costeFinal = getCosteDistancia(distancia) + getCosteTiempo(tiempo);
+        if (costeFinal < getCosteMinimo()) {
+            return getCosteMinimo();
+        } else {
+            return costeFinal;
+        }
+    }
+
+
 }

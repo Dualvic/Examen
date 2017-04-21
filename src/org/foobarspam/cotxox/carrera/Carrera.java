@@ -1,132 +1,102 @@
 package org.foobarspam.cotxox.carrera;
 
-
-import org.foobarspam.cotxox.conductores.Conductor;
-import org.foobarspam.cotxox.conductores.PoolConductores;
+import org.foobarspam.cotxox.conductores.*;
 import org.foobarspam.cotxox.tarifa.Tarifa;
 
+/**
+ * Created by vgarcia.regadera on 19/04/2017.
+ */
 public class Carrera {
 
-	//variables
-	
-	private String tarjetaCredito = "000000000";
-	private String origen = "Unkown";
-	private String destino = "Magaluf";
-	int tiempoEsperadoMinutos = 0;
-	private double distancia = 0;
-	private double costeTotal = 0;
-	private double propina = 0;
-	Conductor conductor = new Conductor("Samantha"); // This variable was null, but i put this to get the code working //
 
-	//constructor
-	
-		public Carrera(){
-			
-		}
-	
-		public Carrera(String tarjetaCredito) {
-			this.tarjetaCredito = tarjetaCredito;
-		}
-	
-	
-	//getters
-	
-		public String getTarjetaCredito() {
-			return this.tarjetaCredito;
-		}
-
-		public String getOrigen() {
-			return origen;
-		}
-
-		public String getDestino() {
-			return destino;
-		}
-
-		public int getTiempoEsperado() {
-			return tiempoEsperadoMinutos;
-		}
-		
-		public double getDistancia() {
-			return distancia;
-		}
-		
-		public double getPropina() {
-			return propina;
-		}
-		
-		public Conductor getConductor() {
-			return conductor;
-		}
-
-	//setters
-
-	public void setTarjetaCredito(String tarjetaCredito) {
-		this.tarjetaCredito = tarjetaCredito;
-	}
+    private String tarjetaCredito = "";
+    private String origen = "";
+    private String destino = "";
+    private double distancia = 0;
+    private double tiempoEsperado = 0;
+    private double tiempoCarrera = 0;
+    private double costeTotal = 0;
+    private double propina = 0;
+    private Conductor conductor = null;
 
 
-	public void setOrigen(String origen) {
-		this.origen = origen;
-	}
+    // constructor
+
+    public Carrera (String tarjetaCredito) {
+        this.tarjetaCredito = tarjetaCredito;
+    }
+
+    // getters
+
+    public String getTarjetaCredito() {
+        return this.tarjetaCredito;
+    }
+
+    public String getOrigen() {
+        return this.origen;
+    }
+
+    public String getDestino() {
+        return this.destino;
+    }
+
+    public double getDistancia() {
+        return this.distancia;
+    }
 
 
-	public void setDestino(String destino) {
-		this.destino = destino;
-	}
+    public Conductor getConductor() {
+        return this.conductor;
+    }
+
+    public double getPropina() {
+        return this.propina;
+    }
+
+    public double getCosteTotal() {
+        return this.costeTotal;
+    }
+
+    // setters
+
+    public void setOrigen(String origen) {
+        this.origen = origen;
+    }
+
+    public void setDestino(String destino) {
+        this.destino = destino;
+    }
+
+    public void setDistancia(double distancia) {
+        this.distancia = distancia;
+    }
+
+    public void setTiempoEsperado(double tiempoEsperado) {
+        this.tiempoEsperado = tiempoEsperado;
+    }
 
 
-	public void setTiempoEsperado(int tiempoEsperado) {
-		this.tiempoEsperadoMinutos = tiempoEsperado;
-	}
-	
-	public void setDistancia(double distancia) {
-		this.distancia = distancia;
-	}
-	
-	public void setPropina(double propina) {
-		this.propina = propina;
-	}
-	
-	public void setConductor(Conductor conductor){
-		this.conductor = conductor;
-	}
-	
-	public void setCosteTotal(double costeTotal){
-		this.costeTotal = costeTotal;
-	}
-	
-	//logic
-	
-	public double getCosteEsperado() {
-		
-		Tarifa tarifa = new Tarifa();
-		Carrera carrera = new Carrera(getTarjetaCredito());
-		
-		double resultado = tarifa.getTotalEsperado(carrera);
-		
-		return resultado;
-	}
-	
-	public void asignarConductor(PoolConductores conductores) {
-		
-		conductores.asignarConductor();
-	}
+    // logic
 
+    public double getCosteEsperado() {
+        return Tarifa.getCosteTotalEsperado(distancia, tiempoEsperado);
+    }
 
-	public void realizarPago(double costeEsperado) {	
-		costeTotal = costeEsperado;
-	}
+    public void realizarPago(double total) {
 
+        this.costeTotal = total;
+    }
 
-	public void recibirPropina(int propina) {
-		setPropina(1);
-	}
+    public void recibirPropina(double propina) {
+        this.propina = propina;
+    }
 
+    public void asignarConductor(PoolConductores pool){
+        this.setConductor(pool.asignarConductor());
 
-	public double getCosteTotal() {
-		setCosteTotal(getPropina() + getCosteEsperado());
-		return costeTotal;
-	}
-	
+    }
+
+    public void setConductor(Conductor conductor) {
+        this.conductor = conductor;
+    }
 }

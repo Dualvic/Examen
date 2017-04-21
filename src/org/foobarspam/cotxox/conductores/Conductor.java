@@ -2,83 +2,79 @@ package org.foobarspam.cotxox.conductores;
 
 import java.util.ArrayList;
 
+/**
+ * Created by vgarcia.regadera on 19/04/2017.
+ */
 public class Conductor {
-	
-	// variables
-	
-	String nombre = "Unknown";
-	String modeloCoche = "";
-	String matricula = "0000000";
-	double valoracionMedia = 0d;
-	boolean ocupado = false;
-	ArrayList<Conductor> valoraciones = new  ArrayList<>();
-	
-	// constructor
-	
-	public Conductor(String nombre) {
-		this.nombre = nombre;
-		
-	}
-	
-	// getters
-	
-	public String getNombre() {
-		return this.nombre;
-	}
-	
-	public String getModelo() {
-		return this.modeloCoche;
-	}
-	
-	public String getMatricula() {
-		return this.matricula;
-	}
-	
-	public double getValoracion() {
-		return this.valoracionMedia;
-	}
-	
-	public boolean isOcupado() {
-		return ocupado;
-	}
-	
-	
-	// setters
-	
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	
-	public void setModelo(String modeloCoche) {
-		this.modeloCoche = modeloCoche;
-	}
 
-	public void setMatricula(String matricula) {
-		this.matricula = matricula;
-	}
+    private static String nombre = "";
+    private static String modelo = "";
+    private static String matricula = "";
+    private double valoracion= 0.0;
+    private static ArrayList<Integer> valoraciones = new ArrayList();
+    private boolean ocupado = false;
 
-	public void setValoracion(double valoracionMedia) {
-		this.valoracionMedia = valoracionMedia;
-	}
+    // constructor
 
-	public void setOcupado(boolean ocupado) {
-		this.ocupado = ocupado;
-	}
+    public Conductor(String nombre) {
+        this.nombre = nombre;
+    }
 
-	// logic
-	
-	public void setValoracion (Conductor valoracion) {
-		
-		valoraciones.add(valoracion);
-	}
-	
-	public void setValoracionMedia(Conductor valoracion) {
-		double valoracionTotal = 0;
-		for (Conductor valor : valoraciones) {
-			valoracionTotal = valoracionTotal + valor.getValoracion();
-		}
-		valoracionMedia = valoracionTotal / valoraciones.size();
-	}
 
+    // getters
+
+    public static String getNombre() {
+        return nombre;
+    }
+
+    public static String getModelo() { return modelo;}
+
+    public static String getMatricula() { return matricula;}
+
+    public static ArrayList<Integer> getValoracion() {return valoraciones;}
+
+    public ArrayList<Integer> getValoraciones() {
+        return valoraciones;
+    }
+
+    public boolean isOcupado() {
+        return ocupado;
+    }
+
+    // setters
+
+    public void ocupar() {
+        this.ocupado = true;
+    }
+    
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
+    }
+
+    public void setValoracion(int valoracion) {
+        valoraciones.add(valoracion);
+        this.actualizarMedia();
+    }
+
+    public void setValoracionMedia(double media) {
+        this.valoracion = media;
+    }
+    
+    //logic
+
+    public void actualizarMedia() {
+
+        double suma = 0.0;
+
+        for (Integer valoracion : this.getValoraciones()) {
+            suma += valoracion;
+        }
+
+        double media = suma / this.getValoraciones().size();
+        this.setValoracionMedia(media);
+    }
 }
-

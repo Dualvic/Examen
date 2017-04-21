@@ -1,31 +1,40 @@
 package org.foobarspam.cotxox.conductores;
 
-import org.foobarspam.cotxox.carrera.*;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
+/**
+ * Created by vgarcia.regadera on 19/04/2017.
+ */
 public class PoolConductores {
 
-	// variables
-	
-	ArrayList<Conductor> conductores = new ArrayList<>();
-	
-	// constructor
-	
-	public PoolConductores(ArrayList<Conductor> poolConductores) {
-		
-		this.conductores = poolConductores;
-	
-	}
+    ArrayList<Conductor> conductores = new ArrayList<>();
 
-	// logic
-	
-	public void asignarConductor(){
-		for (Conductor conductor : conductores) {
-			if (conductor.isOcupado() == false) {
-				conductor.setOcupado(true);
-				Carrera carrera = new Carrera();
-				carrera.setConductor(conductor);
-			}
-		}
-	}
+    //constructor
+
+    public PoolConductores(ArrayList<Conductor> conductores) {
+
+        this.conductores = conductores;
+
+    }
+
+    // logic
+    public Conductor asignarConductor() {
+
+        int pilotoNumero = ThreadLocalRandom.current().nextInt(0, this.conductores.size());
+        Conductor pilotoAsignado = null;
+
+        while (pilotoAsignado == null) {
+
+            if (this.conductores.get(pilotoNumero).isOcupado() == true) {
+                pilotoAsignado = this.conductores.get(pilotoNumero);
+                pilotoAsignado.ocupar();
+
+            } else {
+                pilotoNumero = ThreadLocalRandom.current().nextInt(0, this.conductores.size());
+            }
+        }
+        return pilotoAsignado;
+    }
 }
+
